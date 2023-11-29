@@ -1,0 +1,76 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record id="view_project_usd" model="ir.ui.view">
+            <field name="name">view_project_usd</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <!-- Add new fields here -->
+                    <field name="jan"/>
+                    <field name="feb"/>
+                    <field name="mar"/>
+                    <field name="apr"/>
+                    <field name="may"/>
+                    <field name="jun"/>
+                    <field name="jul"/>
+                    <field name="aug"/>
+                    <field name="sep"/>
+                    <field name="oct"/>
+                    <field name="nov"/>
+                    <field name="dec"/>
+                    <field name="dec"/>
+                    <field name="total_AED"/>
+                    <field name="total_USD"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+        <!--
+            <record model="ir.actions.act_window" id="projection.action_window">
+              <field name="name">projection window</field>
+              <field name="res_model">projection.projection</field>
+              <field name="view_mode">tree,form</field>
+            </record>
+        -->
+
+        <!-- server action to the one above -->
+        <!--
+            <record model="ir.actions.server" id="projection.action_server">
+              <field name="name">projection server</field>
+              <field name="model_id" ref="model_projection_projection"/>
+              <field name="state">code</field>
+              <field name="code">
+                action = {
+                  "type": "ir.actions.act_window",
+                  "view_mode": "tree,form",
+                  "res_model": model._name,
+                }
+              </field>
+            </record>
+        -->
+
+        <!-- Top menu item -->
+        <!--
+            <menuitem name="projection" id="projection.menu_root"/>
+        -->
+        <!-- menu categories -->
+        <!--
+            <menuitem name="Menu 1" id="projection.menu_1" parent="projection.menu_root"/>
+            <menuitem name="Menu 2" id="projection.menu_2" parent="projection.menu_root"/>
+        -->
+        <!-- actions -->
+        <!--
+            <menuitem name="List" id="projection.menu_1_list" parent="projection.menu_1"
+                      action="projection.action_window"/>
+            <menuitem name="Server to list" id="projection" parent="projection.menu_2"
+                      action="projection.action_server"/>
+        -->
+    </data>
+</odoo>
