@@ -103,7 +103,7 @@ class Projection(models.Model):
             })
 
             self.project_id = project
-            self.active = False
+        self.active = False
 
         return {
             'type': 'ir.actions.act_window',
