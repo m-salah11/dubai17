@@ -10,8 +10,8 @@
 
                 <xpath expr="//field[@name='user_id']" position="after">
                     <!-- Add new fields here -->
-                    <field name="AED" invisible="1"/>
-                    <field name="USD" invisible="1"/>
+                    <field name="AED" column_invisible="1"/>
+                    <field name="USD" column_invisible="1"/>
                     <field name="jan" sum="Total"/>
                     <field name="feb" sum="Total"/>
                     <field name="mar" sum="Total"/>
@@ -97,7 +97,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="active" invisible="1"/>
+                                <field name="active" column_invisible="1"/>
                                 <field name="partner_id" widget="res_partner_many2one"/>
                                 <field name="tag_ids" widget="many2many_tags"/>
                                 <field name="AED" invisible="0"/>
@@ -159,9 +159,9 @@
                     <field name="partner_id"/>
                     <field name="user_id"/>
                     <field name="date_start" string="Planned Date" widget="daterange" optional="hide"/>
-                    <field name="AED" invisible="1"/>
-                    <field name="USD" invisible="1"/>
-                    <field name="active" invisible="1"/>
+                    <field name="AED" column_invisible="1"/>
+                    <field name="USD" column_invisible="1"/>
+                    <field name="active" column_invisible="1"/>
                     <field name="jan" sum="Total"/>
                     <field name="feb" sum="Total"/>
                     <field name="mar" sum="Total"/>
