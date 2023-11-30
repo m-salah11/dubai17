@@ -23,7 +23,7 @@ class Project(models.Model):
     nov = fields.Monetary(currency_field='AED')
     dec = fields.Monetary(currency_field='AED')
 
-    total_AED = fields.Monetary(compute='_compute_usd', currency_field='AED')
+    total_AED = fields.Monetary(compute='_compute_usd', currency_field='AED', string='Total AED')
 
     jan_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
     feb_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
@@ -38,7 +38,7 @@ class Project(models.Model):
     nov_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
     dec_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
 
-    total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD')
+    total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD', string='Total USD')
 
     def _compute_usd(self):
         for record in self:
@@ -76,6 +76,8 @@ class Projection(models.Model):
     _description = 'project.projection'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    active = fields.Boolean(default=True)
+
     def create_project(self):
         if not self.project_id:
             project = self.env['project.project'].create({
@@ -101,6 +103,7 @@ class Projection(models.Model):
             })
 
             self.project_id = project
+            self.active = False
 
         return {
             'type': 'ir.actions.act_window',

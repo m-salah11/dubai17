@@ -12,21 +12,21 @@
                     <!-- Add new fields here -->
                     <field name="AED" invisible="1"/>
                     <field name="USD" invisible="1"/>
-                    <field name="jan"/>
-                    <field name="feb"/>
-                    <field name="mar"/>
-                    <field name="apr"/>
-                    <field name="may"/>
-                    <field name="jun"/>
-                    <field name="jul"/>
-                    <field name="aug"/>
-                    <field name="sep"/>
-                    <field name="oct"/>
-                    <field name="nov"/>
-                    <field name="dec"/>
-                    <field name="dec"/>
-                    <field name="total_AED"/>
-                    <field name="total_USD"/>
+                    <field name="jan" sum="Total"/>
+                    <field name="feb" sum="Total"/>
+                    <field name="mar" sum="Total"/>
+                    <field name="apr" sum="Total"/>
+                    <field name="may" sum="Total"/>
+                    <field name="jun" sum="Total"/>
+                    <field name="jul" sum="Total"/>
+                    <field name="aug" sum="Total"/>
+                    <field name="sep" sum="Total"/>
+                    <field name="oct" sum="Total"/>
+                    <field name="nov" sum="Total"/>
+                    <field name="dec" sum="Total"/>
+                    <field name="dec" sum="Total"/>
+                    <field name="total_AED" sum="Total"/>
+                    <field name="total_USD" sum="Total"/>
                 </xpath>
 
             </field>
@@ -97,6 +97,7 @@
                         </div>
                         <group>
                             <group>
+                                <field name="active" invisible="1"/>
                                 <field name="partner_id" widget="res_partner_many2one"/>
                                 <field name="tag_ids" widget="many2many_tags"/>
                                 <field name="AED" invisible="0"/>
@@ -160,21 +161,22 @@
                     <field name="date_start" string="Planned Date" widget="daterange" optional="hide"/>
                     <field name="AED" invisible="1"/>
                     <field name="USD" invisible="1"/>
-                    <field name="jan"/>
-                    <field name="feb"/>
-                    <field name="mar"/>
-                    <field name="apr"/>
-                    <field name="may"/>
-                    <field name="jun"/>
-                    <field name="jul"/>
-                    <field name="aug"/>
-                    <field name="sep"/>
-                    <field name="oct"/>
-                    <field name="nov"/>
-                    <field name="dec"/>
-                    <field name="dec"/>
-                    <field name="total_AED"/>
-                    <field name="total_USD"/>
+                    <field name="active" invisible="1"/>
+                    <field name="jan" sum="Total"/>
+                    <field name="feb" sum="Total"/>
+                    <field name="mar" sum="Total"/>
+                    <field name="apr" sum="Total"/>
+                    <field name="may" sum="Total"/>
+                    <field name="jun" sum="Total"/>
+                    <field name="jul" sum="Total"/>
+                    <field name="aug" sum="Total"/>
+                    <field name="sep" sum="Total"/>
+                    <field name="oct" sum="Total"/>
+                    <field name="nov" sum="Total"/>
+                    <field name="dec" sum="Total"/>
+                    <field name="dec" sum="Total"/>
+                    <field name="total_AED" sum="Total"/>
+                    <field name="total_USD" sum="Total"/>
                 </tree>
             </field>
         </record>
