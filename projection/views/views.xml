@@ -39,7 +39,7 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//field[@name='partner_id']" position="after">
+                <xpath expr="//field[@name='tag_ids']" position="after">
                     <field name="AED" invisible="0"/>
                     <field name="jan"/>
                     <field name="feb"/>
@@ -98,6 +98,7 @@
                         <group>
                             <group>
                                 <field name="partner_id" widget="res_partner_many2one"/>
+                                <field name="tag_ids" widget="many2many_tags"/>
                                 <field name="AED" invisible="0"/>
                                 <field name="jan"/>
                                 <field name="feb"/>
@@ -117,7 +118,7 @@
                                 <field name="user_id" string="Project Manager" widget="many2one_avatar_user"
 
                                        options="{'no_quick_create': True}"/>
-                                <field name="date_start" string="Planned Date" widget="daterange"/>
+                                <field name="date_start" string="Planned Date"/>
                                 <field name="USD" invisible="0"/>
                                 <field name="USD_rate"/>
                                 <field name="jan_usd"/>

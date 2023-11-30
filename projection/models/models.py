@@ -74,7 +74,7 @@ class Project(models.Model):
 class Projection(models.Model):
     _name = 'project.projection'
     _description = 'project.projection'
-    _inherit = ['portal.mixin', 'mail.alias.mixin', 'rating.parent.mixin', 'mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     def create_project(self):
         if not self.project_id:
@@ -128,6 +128,9 @@ class Projection(models.Model):
     date_start = fields.Date(
         string='Planned Date',
         required=False)
+
+    tag_ids = fields.Many2many(
+        comodel_name='project.tags')
 
     AED = fields.Many2one('res.currency')
     USD = fields.Many2one('res.currency')
