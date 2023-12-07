@@ -23,8 +23,6 @@ class Project(models.Model):
     nov = fields.Monetary(currency_field='AED')
     dec = fields.Monetary(currency_field='AED')
 
-    total_AED = fields.Monetary(compute='_compute_usd', currency_field='AED', string='Total AED')
-
     jan_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
     feb_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
     mar_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
@@ -38,7 +36,16 @@ class Project(models.Model):
     nov_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
     dec_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
 
+    total_AED = fields.Monetary(compute='_compute_usd', currency_field='AED', string='Total AED')
     total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD', string='Total USD')
+    total_planned_aed = fields.Monetary(currency_field='AED', string="Total Planned AED")
+    total_planned_usd = fields.Monetary(compute='_compute_usd', currency_field='USD', string="Total Planned USD")
+    remaining_aed = fields.Monetary(currency_field='AED')
+    remaining_usd = fields.Monetary(currency_field='USD', compute='_compute_usd')
+
+    @api.onchange('total_planned_aed', 'total_AED')
+    def onchange_total(self):
+        self.remaining_aed = self.total_planned_aed - self.total_AED
 
     def _compute_usd(self):
         for record in self:
@@ -69,6 +76,8 @@ class Project(models.Model):
                     record.dec
             )
             record.total_USD = record.total_AED / record.USD_rate if record.USD_rate else 0
+            record.total_planned_usd = record.total_planned_aed / record.USD_rate if record.USD_rate else 0
+            record.remaining_usd = record.remaining_aed / record.USD_rate if record.USD_rate else 0
 
 
 class Projection(models.Model):
@@ -152,8 +161,6 @@ class Projection(models.Model):
     nov = fields.Monetary(currency_field='AED')
     dec = fields.Monetary(currency_field='AED')
 
-    total_AED = fields.Monetary(compute='_compute_usd', currency_field='AED')
-
     jan_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
     feb_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
     mar_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
@@ -167,7 +174,16 @@ class Projection(models.Model):
     nov_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
     dec_usd = fields.Monetary(compute='_compute_usd', currency_field='USD')
 
-    total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD')
+    total_AED = fields.Monetary(compute='_compute_usd', currency_field='AED', string='Total AED')
+    total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD', string='Total USD')
+    total_planned_aed = fields.Monetary(currency_field='AED', string="Total Planned AED")
+    total_planned_usd = fields.Monetary(compute='_compute_usd', currency_field='USD', string="Total Planned USD")
+    remaining_aed = fields.Monetary(currency_field='AED')
+    remaining_usd = fields.Monetary(currency_field='USD', compute='_compute_usd')
+
+    @api.onchange('total_planned_aed', 'total_AED')
+    def onchange_total(self):
+        self.remaining_aed = self.total_planned_aed - self.total_AED
 
     def _compute_usd(self):
         for record in self:
@@ -198,3 +214,5 @@ class Projection(models.Model):
                     record.dec
             )
             record.total_USD = record.total_AED / record.USD_rate if record.USD_rate else 0
+            record.total_planned_usd = record.total_planned_aed / record.USD_rate if record.USD_rate else 0
+            record.remaining_usd = record.remaining_aed / record.USD_rate if record.USD_rate else 0

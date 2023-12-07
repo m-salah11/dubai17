@@ -27,6 +27,10 @@
                     <field name="dec" sum="Total"/>
                     <field name="total_AED" sum="Total"/>
                     <field name="total_USD" sum="Total"/>
+                    <field name="total_planned_aed" sum="Total"/>
+                    <field name="total_planned_usd" sum="Total"/>
+                    <field name="remaining_aed" sum="Total"/>
+                    <field name="remaining_usd" sum="Total"/>
                 </xpath>
 
             </field>
@@ -54,6 +58,8 @@
                     <field name="nov"/>
                     <field name="dec"/>
                     <field name="total_AED"/>
+                    <field name="total_planned_aed"/>
+                    <field name="remaining_aed"/>
                 </xpath>
 
                 <xpath expr="//field[@name='date_start']" position="after">
@@ -72,6 +78,8 @@
                     <field name="nov_usd"/>
                     <field name="dec_usd"/>
                     <field name="total_USD"/>
+                    <field name="total_planned_usd"/>
+                    <field name="remaining_usd"/>
                 </xpath>
 
             </field>
@@ -114,6 +122,9 @@
                                 <field name="nov"/>
                                 <field name="dec"/>
                                 <field name="total_AED"/>
+                                <field name="total_planned_aed"/>
+                                <field name="remaining_aed"/>
+
                             </group>
                             <group>
                                 <field name="user_id" string="Project Manager" widget="many2one_avatar_user"
@@ -135,6 +146,9 @@
                                 <field name="nov_usd"/>
                                 <field name="dec_usd"/>
                                 <field name="total_USD"/>
+                                <field name="total_planned_usd"/>
+                                <field name="remaining_usd"/>
+
                             </group>
                         </group>
 
@@ -177,6 +191,10 @@
                     <field name="dec" sum="Total"/>
                     <field name="total_AED" sum="Total"/>
                     <field name="total_USD" sum="Total"/>
+                    <field name="total_planned_aed" sum="Total"/>
+                    <field name="total_planned_usd" sum="Total"/>
+                    <field name="remaining_aed" sum="Total"/>
+                    <field name="remaining_usd" sum="Total"/>
                 </tree>
             </field>
         </record>
@@ -189,7 +207,8 @@
         </record>
 
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="projection_menu" name="Projection" parent="project.menu_main_pm" action="projection_action" sequence="1"/>
+        <menuitem id="projection_menu" name="Projection" parent="project.menu_main_pm" action="projection_action"
+                  sequence="1"/>
 
 
         <!-- actions opening views on models -->
