@@ -40,8 +40,8 @@ class Project(models.Model):
     total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD', string='Total USD')
     total_planned_aed = fields.Monetary(currency_field='AED', string="Total Planned AED")
     total_planned_usd = fields.Monetary(compute='_compute_usd', currency_field='USD', string="Total Planned USD")
-    remaining_aed = fields.Monetary(currency_field='AED')
-    remaining_usd = fields.Monetary(currency_field='USD', compute='_compute_usd')
+    remaining_aed = fields.Monetary(currency_field='AED', string="Outstanding AED")
+    remaining_usd = fields.Monetary(currency_field='USD', compute='_compute_usd', string="Outstanding USD")
 
     @api.onchange('total_planned_aed', 'total_AED')
     def onchange_total(self):
@@ -178,8 +178,8 @@ class Projection(models.Model):
     total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD', string='Total USD')
     total_planned_aed = fields.Monetary(currency_field='AED', string="Total Planned AED")
     total_planned_usd = fields.Monetary(compute='_compute_usd', currency_field='USD', string="Total Planned USD")
-    remaining_aed = fields.Monetary(currency_field='AED')
-    remaining_usd = fields.Monetary(currency_field='USD', compute='_compute_usd')
+    remaining_aed = fields.Monetary(currency_field='AED', string="Outstanding AED")
+    remaining_usd = fields.Monetary(currency_field='USD', compute='_compute_usd', string="Outstanding USD")
 
     @api.onchange('total_planned_aed', 'total_AED')
     def onchange_total(self):
