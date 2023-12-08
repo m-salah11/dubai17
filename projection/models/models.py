@@ -3,12 +3,30 @@
 from odoo import models, fields, api
 
 
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
+    USD_rate = fields.Float(config_parameter='projection.USD_rate')
+
+
 class Project(models.Model):
     _inherit = 'project.project'
 
-    AED = fields.Many2one('res.currency')
-    USD = fields.Many2one('res.currency')
-    USD_rate = fields.Float()
+    AED = fields.Many2one('res.currency', default=lambda self: self.env.ref('base.AED'))
+    USD = fields.Many2one('res.currency', default=lambda self: self.env.ref('base.USD'))
+    USD_rate = fields.Float(
+        default=lambda self: self.env['ir.config_parameter'].sudo().get_param('projection.USD_rate'))
+
+    abbreviation = fields.Char()
+    project_type = fields.Selection(
+        selection=[
+            ('amc', 'AMC'),
+            ('new', 'New Business'),
+            ('odoo', 'Odoo Licenses'),
+        ], required=False, )
+    sw_licenses = fields.Monetary(currency_field='AED', string='SW Licenses')
+    professional_services = fields.Monetary(currency_field='AED')
+    maintenance = fields.Monetary(currency_field='AED')
+    project_name = fields.Char()
 
     jan = fields.Monetary(currency_field='AED')
     feb = fields.Monetary(currency_field='AED')
@@ -38,8 +56,8 @@ class Project(models.Model):
 
     total_AED = fields.Monetary(compute='_compute_usd', currency_field='AED', string='Total AED')
     total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD', string='Total USD')
-    total_planned_aed = fields.Monetary(currency_field='AED', string="Total Planned AED")
-    total_planned_usd = fields.Monetary(compute='_compute_usd', currency_field='USD', string="Total Planned USD")
+    total_planned_aed = fields.Monetary(currency_field='AED', string="Total Project Value AED")
+    total_planned_usd = fields.Monetary(compute='_compute_usd', currency_field='USD', string="Total Project Value USD")
     remaining_aed = fields.Monetary(currency_field='AED', string="Outstanding AED")
     remaining_usd = fields.Monetary(currency_field='USD', compute='_compute_usd', string="Outstanding USD")
 
@@ -47,6 +65,22 @@ class Project(models.Model):
     def onchange_total(self):
         self.remaining_aed = self.total_planned_aed - self.total_AED
 
+    @api.depends(
+        'USD_rate',
+        'jan',
+        'feb',
+        'mar',
+        'apr',
+        'may',
+        'jun',
+        'jul',
+        'aug',
+        'sep',
+        'oct',
+        'nov',
+        'dec',
+        'total_planned_aed',
+    )
     def _compute_usd(self):
         for record in self:
             record.jan_usd = record.jan / record.USD_rate if record.USD_rate else 0
@@ -78,6 +112,7 @@ class Project(models.Model):
             record.total_USD = record.total_AED / record.USD_rate if record.USD_rate else 0
             record.total_planned_usd = record.total_planned_aed / record.USD_rate if record.USD_rate else 0
             record.remaining_usd = record.remaining_aed / record.USD_rate if record.USD_rate else 0
+            record.onchange_total()
 
 
 class Projection(models.Model):
@@ -86,6 +121,17 @@ class Projection(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     active = fields.Boolean(default=True)
+    project_name = fields.Char()
+    abbreviation = fields.Char()
+    project_type = fields.Selection(
+        selection=[
+            ('amc', 'AMC'),
+            ('new', 'New Business'),
+            ('odoo', 'Odoo Licenses'),
+        ], required=False, )
+    sw_licenses = fields.Monetary(currency_field='AED', string='SW Licenses')
+    professional_services = fields.Monetary(currency_field='AED')
+    maintenance = fields.Monetary(currency_field='AED')
 
     def create_project(self):
         if not self.project_id:
@@ -144,9 +190,10 @@ class Projection(models.Model):
     tag_ids = fields.Many2many(
         comodel_name='project.tags')
 
-    AED = fields.Many2one('res.currency')
-    USD = fields.Many2one('res.currency')
-    USD_rate = fields.Float()
+    AED = fields.Many2one('res.currency', default=lambda self: self.env.ref('base.AED'))
+    USD = fields.Many2one('res.currency', default=lambda self: self.env.ref('base.USD'))
+    USD_rate = fields.Float(
+        default=lambda self: self.env['ir.config_parameter'].sudo().get_param('projection.USD_rate'))
 
     jan = fields.Monetary(currency_field='AED')
     feb = fields.Monetary(currency_field='AED')
@@ -176,8 +223,8 @@ class Projection(models.Model):
 
     total_AED = fields.Monetary(compute='_compute_usd', currency_field='AED', string='Total AED')
     total_USD = fields.Monetary(compute='_compute_usd', currency_field='USD', string='Total USD')
-    total_planned_aed = fields.Monetary(currency_field='AED', string="Total Planned AED")
-    total_planned_usd = fields.Monetary(compute='_compute_usd', currency_field='USD', string="Total Planned USD")
+    total_planned_aed = fields.Monetary(currency_field='AED', string="Total Project Value AED")
+    total_planned_usd = fields.Monetary(compute='_compute_usd', currency_field='USD', string="Total Project Value USD")
     remaining_aed = fields.Monetary(currency_field='AED', string="Outstanding AED")
     remaining_usd = fields.Monetary(currency_field='USD', compute='_compute_usd', string="Outstanding USD")
 
@@ -185,6 +232,22 @@ class Projection(models.Model):
     def onchange_total(self):
         self.remaining_aed = self.total_planned_aed - self.total_AED
 
+    @api.depends(
+        'USD_rate',
+        'jan',
+        'feb',
+        'mar',
+        'apr',
+        'may',
+        'jun',
+        'jul',
+        'aug',
+        'sep',
+        'oct',
+        'nov',
+        'dec',
+        'total_planned_aed',
+    )
     def _compute_usd(self):
         for record in self:
             record.jan_usd = record.jan / record.USD_rate if record.USD_rate else 0
@@ -216,3 +279,4 @@ class Projection(models.Model):
             record.total_USD = record.total_AED / record.USD_rate if record.USD_rate else 0
             record.total_planned_usd = record.total_planned_aed / record.USD_rate if record.USD_rate else 0
             record.remaining_usd = record.remaining_aed / record.USD_rate if record.USD_rate else 0
+            record.onchange_total()

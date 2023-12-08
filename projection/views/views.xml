@@ -1,5 +1,25 @@
 <odoo>
     <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="res_config_settings_view_form_usd" model="ir.ui.view">
+            <field name="name">res_config_settings_view_form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="project.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//app[@name='project']" position="inside">
+                    <!-- Add your fields or attributes here -->
+                    <block title="Projection" name="projection">
+                            <setting id="usd" help="Projection USD/AED Currency Rate Default">
+                                <field name="USD_rate"/>
+                            </setting>
+                        </block>
+                </xpath>
+
+            </field>
+        </record>
+
         <!-- explicit list view definition -->
 
         <record id="view_project_usd" model="ir.ui.view">
@@ -108,7 +128,25 @@
                                 <field name="active" invisible="1"/>
                                 <field name="partner_id" widget="res_partner_many2one"/>
                                 <field name="tag_ids" widget="many2many_tags"/>
-                                <field name="AED" invisible="0"/>
+                                <field name="abbreviation"/>
+                                <field name="project_name"/>
+                                <field name="project_type"/>
+                                <field name="total_planned_aed"/>
+                                <field name="sw_licenses"/>
+                                <field name="professional_services"/>
+                                <field name="maintenance"/>
+
+                            </group>
+                            <group>
+                                <field name="user_id" string="Project Manager" widget="many2one_avatar_user"
+                                       options="{'no_quick_create': True}"/>
+                                <field name="date_start" string="Planned Date"/>
+                                <field name="USD_rate" />
+                                <field name="total_planned_usd"/>
+
+                            </group>
+                            <group>
+                                <field name="AED" groups="base.group_no_one"/>
                                 <field name="jan"/>
                                 <field name="feb"/>
                                 <field name="mar"/>
@@ -122,17 +160,10 @@
                                 <field name="nov"/>
                                 <field name="dec"/>
                                 <field name="total_AED"/>
-                                <field name="total_planned_aed"/>
                                 <field name="remaining_aed"/>
-
                             </group>
                             <group>
-                                <field name="user_id" string="Project Manager" widget="many2one_avatar_user"
-
-                                       options="{'no_quick_create': True}"/>
-                                <field name="date_start" string="Planned Date"/>
-                                <field name="USD" invisible="0"/>
-                                <field name="USD_rate"/>
+                                <field name="USD" groups="base.group_no_one"/>
                                 <field name="jan_usd"/>
                                 <field name="feb_usd"/>
                                 <field name="mar_usd"/>
@@ -146,7 +177,6 @@
                                 <field name="nov_usd"/>
                                 <field name="dec_usd"/>
                                 <field name="total_USD"/>
-                                <field name="total_planned_usd"/>
                                 <field name="remaining_usd"/>
 
                             </group>
