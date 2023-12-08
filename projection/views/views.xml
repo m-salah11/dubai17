@@ -11,10 +11,10 @@
                 <xpath expr="//app[@name='project']" position="inside">
                     <!-- Add your fields or attributes here -->
                     <block title="Projection" name="projection">
-                            <setting id="usd" help="Projection USD/AED Currency Rate Default">
-                                <field name="USD_rate"/>
-                            </setting>
-                        </block>
+                        <setting id="usd" help="Projection USD/AED Currency Rate Default">
+                            <field name="USD_rate"/>
+                        </setting>
+                    </block>
                 </xpath>
 
             </field>
@@ -63,8 +63,24 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//group[1]" position="before">
+                    <group>
+                        <field name="abbreviation"/>
+                        <field name="project_name"/>
+                        <field name="project_type"/>
+                        <field name="total_planned_aed"/>
+                        <field name="sw_licenses"/>
+                        <field name="professional_services"/>
+                        <field name="maintenance"/>
+                    </group>
+                    <group></group>
+
+                </xpath>
+
                 <xpath expr="//field[@name='tag_ids']" position="after">
-                    <field name="AED" invisible="0"/>
+                    <field name="AED" invisible="0" groups="base.group_no_one"/>
+
+                    <field name="total_planned_aed"/>
                     <field name="jan"/>
                     <field name="feb"/>
                     <field name="mar"/>
@@ -78,12 +94,12 @@
                     <field name="nov"/>
                     <field name="dec"/>
                     <field name="total_AED"/>
-                    <field name="total_planned_aed"/>
                     <field name="remaining_aed"/>
                 </xpath>
 
                 <xpath expr="//field[@name='date_start']" position="after">
-                    <field name="USD" invisible="0"/>
+                    <field name="USD" invisible="0" groups="base.group_no_one"/>
+                    <field name="total_planned_usd"/>
                     <field name="USD_rate"/>
                     <field name="jan_usd"/>
                     <field name="feb_usd"/>
@@ -98,7 +114,6 @@
                     <field name="nov_usd"/>
                     <field name="dec_usd"/>
                     <field name="total_USD"/>
-                    <field name="total_planned_usd"/>
                     <field name="remaining_usd"/>
                 </xpath>
 
@@ -141,7 +156,7 @@
                                 <field name="user_id" string="Project Manager" widget="many2one_avatar_user"
                                        options="{'no_quick_create': True}"/>
                                 <field name="date_start" string="Planned Date"/>
-                                <field name="USD_rate" />
+                                <field name="USD_rate"/>
                                 <field name="total_planned_usd"/>
 
                             </group>
@@ -240,47 +255,5 @@
         <menuitem id="projection_menu" name="Projection" parent="project.menu_main_pm" action="projection_action"
                   sequence="1"/>
 
-
-        <!-- actions opening views on models -->
-        <!--
-            <record model="ir.actions.act_window" id="projection.action_window">
-              <field name="name">projection window</field>
-              <field name="res_model">projection.projection</field>
-              <field name="view_mode">tree,form</field>
-            </record>
-        -->
-
-        <!-- server action to the one above -->
-        <!--
-            <record model="ir.actions.server" id="projection.action_server">
-              <field name="name">projection server</field>
-              <field name="model_id" ref="model_projection_projection"/>
-              <field name="state">code</field>
-              <field name="code">
-                action = {
-                  "type": "ir.actions.act_window",
-                  "view_mode": "tree,form",
-                  "res_model": model._name,
-                }
-              </field>
-            </record>
-        -->
-
-        <!-- Top menu item -->
-        <!--
-            <menuitem name="projection" id="projection.menu_root"/>
-        -->
-        <!-- menu categories -->
-        <!--
-            <menuitem name="Menu 1" id="projection.menu_1" parent="projection.menu_root"/>
-            <menuitem name="Menu 2" id="projection.menu_2" parent="projection.menu_root"/>
-        -->
-        <!-- actions -->
-        <!--
-            <menuitem name="List" id="projection.menu_1_list" parent="projection.menu_1"
-                      action="projection.action_window"/>
-            <menuitem name="Server to list" id="projection" parent="projection.menu_2"
-                      action="projection.action_server"/>
-        -->
     </data>
 </odoo>

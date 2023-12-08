@@ -7,6 +7,14 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
     USD_rate = fields.Float(config_parameter='projection.USD_rate')
 
+    @api.onchange('USD_rate')
+    def onchange_USD_rate(self):
+        for rec in self.env['project.project'].search([]):
+            rec.USD_rate = self.USD_rate
+
+        for rec in self.env['project.projection'].search([]):
+            rec.USD_rate = self.USD_rate
+
 
 class Project(models.Model):
     _inherit = 'project.project'
@@ -14,7 +22,8 @@ class Project(models.Model):
     AED = fields.Many2one('res.currency', default=lambda self: self.env.ref('base.AED'))
     USD = fields.Many2one('res.currency', default=lambda self: self.env.ref('base.USD'))
     USD_rate = fields.Float(
-        default=lambda self: self.env['ir.config_parameter'].sudo().get_param('projection.USD_rate'))
+        default=lambda self: self.env['ir.config_parameter'].sudo().get_param('projection.USD_rate'), readonly=1
+    )
 
     abbreviation = fields.Char()
     project_type = fields.Selection(

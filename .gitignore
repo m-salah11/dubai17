@@ -2,3 +2,5 @@
 *.cpython.*
 *.pyc
 *.cpython-310.pyc
+projection/models/__pycache__/models.cpython-310.pyc
+projection.zip
